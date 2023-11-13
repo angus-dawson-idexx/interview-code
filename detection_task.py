@@ -1,11 +1,38 @@
 from argparse import ArgumentParser
+from typing import TypedDict
 
+import boto3
 import pandas as pd
 
-from common import Task
+
+BUCKET = "some-bucket"
 
 
-class DetectionTask(Task):
+class BoundingBox(TypedDict):
+    image_id: str
+    x_center: float
+    y_center: float
+    width: float
+    height: float
+
+
+class Detector:
+    def __init__(self) -> None:
+        session = boto3.session.Session()
+        self.s3_client = session.client('s3')
+
+    def run_detection(self, collection_id: str, image_ids: list[str]) -> list[BoundingBox]:
+        """
+        Run the detection application on a list of image IDs from a collection.
+
+        :param collection_id: the ID of the collection
+        :param image_ids: the IDs of the images to run detection on
+        :return: a list of bounding boxes
+        """
+        pass  # Pretend this is implemented
+
+
+class DetectionTask:
 
     def load_dataset_csv_data(self) -> pd.DataFrame:
         """
@@ -17,8 +44,9 @@ class DetectionTask(Task):
         p = ArgumentParser()
         p.add_argument("--dataset-csv-path", required=False, type=str)
         namespace = p.parse_args()
-        data = self.load_csv_from_s3(namespace.sampler_csv_path)
-        return data
+
+        # This method needs to be implemented below
+        return self.load_csv_from_s3(namespace.sampler_csv_path)
 
     def load_csv_from_s3(self, csv_path: str) -> pd.DataFrame:
         """

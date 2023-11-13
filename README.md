@@ -10,7 +10,7 @@ The first stage of our pipeline, the dataset task, fetches 25 image IDs from a d
 and exports them as a CSV file in an S3 bucket. This is implemented in `dataset_task.py`.
 
 We have an application that runs a bounding box detection algorithm on these images.
-This application's interface can be found in `detector.pyi`.
+This application's interface can be found in `detection_task.py` in the `Detector` class.
 
 The rest of our pipeline needs to receive a CSV file with rows representing the bounding
 boxes detected by this algorithm. The CSV file should have the following columns:

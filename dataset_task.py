@@ -1,12 +1,19 @@
+import sqlite3
 from datetime import datetime
 from io import BytesIO
 
+import boto3
 import pandas as pd
 
-from common import Task, BUCKET
+
+BUCKET = "some-bucket"
 
 
-class DatasetTask(Task):
+class DatasetTask:
+    def __init__(self) -> None:
+        session = boto3.session.Session()
+        self.s3_client = session.client('s3')
+        self.sql_connection = sqlite3.connect("local.db")
 
     def create_dataset(self) -> pd.DataFrame:
         """
