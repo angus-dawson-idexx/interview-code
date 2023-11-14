@@ -17,9 +17,6 @@ class BoundingBox(TypedDict):
 
 
 class Detector:
-    def __init__(self) -> None:
-        session = boto3.session.Session()
-        self.s3_client = session.client('s3')
 
     def run_detection(self, collection_id: str, image_ids: list[str]) -> list[BoundingBox]:
         """
@@ -33,6 +30,10 @@ class Detector:
 
 
 class DetectionTask:
+
+    def __init__(self) -> None:
+        session = boto3.session.Session()
+        self.s3_client = session.client('s3')
 
     def load_dataset_csv_data(self) -> pd.DataFrame:
         """
