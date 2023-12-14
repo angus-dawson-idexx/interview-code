@@ -44,20 +44,11 @@ class DetectionTask:
         """
         p = ArgumentParser()
         p.add_argument("--dataset-csv-path", required=False, type=str)
-        namespace = p.parse_args()
+        dataset_csv_path = p.parse_args().dataset_csv_path
 
-        # This method needs to be implemented below
-        return self.load_csv_from_s3(namespace.sampler_csv_path)
+        dataset_df: pd.DataFrame = ...  # load CSV from s3 into a DataFrame
 
-    def load_csv_from_s3(self, csv_path: str) -> pd.DataFrame:
-        """
-        Given a path to a .csv file in S3 ("s3://<bucket>/<key>"),
-        loads the CSV file as a pandas DataFrame.
-
-        :param csv_path: the URI of the CSV file in S3
-        :return: a DataFrame with the loaded CSV data
-        """
-        raise NotImplementedError()
+        return dataset_df
 
     def run(self) -> str:
         """
