@@ -6,8 +6,12 @@ that they need to label. Each detected object will be indicated by a bounding bo
 Each image, denoted by "image_id", is within a collection of images, denoted by "collection_id". 
 Each collection contains several images. 
 
-The first stage of our pipeline, the dataset task, fetches 25 image IDs from a database 
-and exports them as a CSV file in an S3 bucket. This is implemented in `dataset_task.py`.
+The data source of our pipeline is a table `IMAGE` in a database, with the following columns:
+
+```
+collection_id: the ID of the collection that the image belongs to
+image_id: the ID of the image the bounding box is in
+```
 
 We have an application that runs a bounding box detection algorithm on these images.
 This application's interface can be found in `detection_task.py` in the `Detector` class.
@@ -24,6 +28,6 @@ x2: x-coordinate of the bottom right corner (the right edge) of the bounding box
 y2: y-coordinate of the bottom right corner (the bottom edge) of the bounding box
 ```
 
-This file should be exported to a CSV file in the same bucket as the dataset CSV.
+This file should be exported to disk as the output of this stage in the pipeline.
 
 Your assignment is to implement logic in `detection_task.py` to achieve this.
